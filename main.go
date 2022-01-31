@@ -27,6 +27,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	//TODO timer should be customized with a flag
 	timer := time.NewTimer(time.Duration(30) * time.Second)
 
 	correctAnswers,totalQuestions := startQuiz(problemSet, timer)
