@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -15,8 +16,12 @@ type Problem struct {
 }
 
 func main() {
-	//TODO Filename should be customized with a flag
-	f, err := os.Open("./problems.csv")
+
+	csvFile := flag.String("csv", "./problems.csv", "Path to the problem set in csv format")
+	duration := flag.Int("duration", 30, "Duration in seconds for the quiz")
+	flag.Parse()
+
+	f, err := os.Open(*csvFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,8 +32,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//TODO timer should be customized with a flag
-	timer := time.NewTimer(time.Duration(30) * time.Second)
+
+	timer := time.NewTimer(time.Duration(*duration) * time.Second)
 
 	correctAnswers,totalQuestions := startQuiz(problemSet, timer)
 	fmt.Printf("Got %d out of %d correct", correctAnswers, totalQuestions)
